@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -63,10 +64,11 @@ public partial class MainWindow : Window
         AddToHistory(uri!.ToString());
 
         var result = new StringBuilder();
+        var effectivePort = GetEffectivePort(uri);
         result.AppendLine("Анализ URL завершен:");
         result.AppendLine($"Схема: {uri.Scheme}");
         result.AppendLine($"Хост: {uri.Host}");
-        result.AppendLine($"Порт: {(uri.IsDefaultPort ? "(по умолчанию)" : uri.Port)}");
+        result.AppendLine($"Порт: {(uri.IsDefaultPort ? $"{effectivePort} (по умолчанию для схемы)" : effectivePort)}");
         result.AppendLine($"Путь: {uri.AbsolutePath}");
         result.AppendLine($"Параметры запроса: {(string.IsNullOrWhiteSpace(uri.Query) ? "(нет)" : uri.Query)}");
         result.AppendLine($"Фрагмент: {(string.IsNullOrWhiteSpace(uri.Fragment) ? "(нет)" : uri.Fragment)}");
@@ -97,6 +99,19 @@ public partial class MainWindow : Window
                 result.AppendLine($"IP: {reply.Address}");
                 result.AppendLine($"Время: {reply.RoundtripTime} мс");
                 result.AppendLine($"TTL: {reply.Options?.Ttl}");
+            }
+            else if (reply.Status == IPStatus.TimedOut)
+            {
+                var port = GetEffectivePort(uri);
+                var tcpCheck = await TryTcpConnectAsync(uri.Host, port, 4000);
+
+                result.AppendLine("ICMP может быть заблокирован на стороне узла или в сети.");
+                result.AppendLine($"TCP-проверка {uri.Host}:{port}: {(tcpCheck.Success ? "доступен" : "недоступен")}, {tcpCheck.ElapsedMs} мс");
+
+                if (!tcpCheck.Success && !string.IsNullOrWhiteSpace(tcpCheck.Error))
+                {
+                    result.AppendLine($"Причина TCP: {tcpCheck.Error}");
+                }
             }
 
             ResultTextBox.Text = result.ToString();
@@ -138,10 +153,78 @@ public partial class MainWindow : Window
         }
     }
 
+    private static async Task<(bool Success, long ElapsedMs, string Error)> TryTcpConnectAsync(string host, int port, int timeoutMs)
+    {
+        using var client = new TcpClient();
+        var sw = Stopwatch.StartNew();
+
+        var connectTask = client.ConnectAsync(host, port);
+        var timeoutTask = Task.Delay(timeoutMs);
+        var completed = await Task.WhenAny(connectTask, timeoutTask);
+
+        sw.Stop();
+
+        if (completed == timeoutTask)
+        {
+            return (false, sw.ElapsedMilliseconds, $"таймаут {timeoutMs} мс");
+        }
+
+        try
+        {
+            await connectTask;
+            return (true, sw.ElapsedMilliseconds, string.Empty);
+        }
+        catch (Exception ex)
+        {
+            return (false, sw.ElapsedMilliseconds, ex.Message);
+        }
+    }
+
+    private static int GetEffectivePort(Uri uri)
+    {
+        if (!uri.IsDefaultPort)
+        {
+            return uri.Port;
+        }
+
+        return uri.Scheme.ToLowerInvariant() switch
+        {
+            "https" => 443,
+            "http" => 80,
+            _ => uri.Port
+        };
+    }
+
+    private void ClearInputClick(object? sender, RoutedEventArgs e)
+    {
+        UrlInputTextBox.Text = string.Empty;
+        UrlInputTextBox.Focus();
+    }
+
     private void ClearHistoryClick(object? sender, RoutedEventArgs e)
     {
         HistoryListBox.ItemsSource = Array.Empty<string>();
         SaveHistory(Array.Empty<string>());
+    }
+
+    private void HistorySelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (HistoryListBox.SelectedItem is not string entry || string.IsNullOrWhiteSpace(entry))
+        {
+            return;
+        }
+
+        var separator = " | ";
+        var separatorIndex = entry.IndexOf(separator, StringComparison.Ordinal);
+        var url = separatorIndex >= 0
+            ? entry[(separatorIndex + separator.Length)..].Trim()
+            : entry.Trim();
+
+        if (!string.IsNullOrWhiteSpace(url))
+        {
+            UrlInputTextBox.Text = url;
+            UrlInputTextBox.CaretIndex = url.Length;
+        }
     }
 
     private void LoadInterfaces()

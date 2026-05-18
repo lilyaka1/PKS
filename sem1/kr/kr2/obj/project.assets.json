@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/lilyaka/Desktop/раб.тетради/пкс/kr2/MatrixCalculator/MatrixCalculator.csproj",
+      "projectUniqueName": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/kr2/MatrixCalculator.csproj",
       "projectName": "MatrixCalculator",
-      "projectPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/kr2/MatrixCalculator/MatrixCalculator.csproj",
+      "projectPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/kr2/MatrixCalculator.csproj",
       "packagesPath": "/Users/lilyaka/.nuget/packages/",
-      "outputPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/kr2/MatrixCalculator/obj/",
+      "outputPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/kr2/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/lilyaka/.nuget/NuGet/NuGet.Config"

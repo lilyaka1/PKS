@@ -3113,11 +3113,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/lilyaka/Desktop/раб.тетради/пкс/Restaraunt_Table_Reservation/RestaurantConsoleApp/RestaurantConsoleApp.csproj",
+      "projectUniqueName": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/Restaraunt_Table_Reservation/RestaurantConsoleApp.csproj",
       "projectName": "RestaurantConsoleApp",
-      "projectPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/Restaraunt_Table_Reservation/RestaurantConsoleApp/RestaurantConsoleApp.csproj",
+      "projectPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/Restaraunt_Table_Reservation/RestaurantConsoleApp.csproj",
       "packagesPath": "/Users/lilyaka/.nuget/packages/",
-      "outputPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/Restaraunt_Table_Reservation/RestaurantConsoleApp/obj/",
+      "outputPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/Restaraunt_Table_Reservation/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/lilyaka/.nuget/NuGet/NuGet.Config"

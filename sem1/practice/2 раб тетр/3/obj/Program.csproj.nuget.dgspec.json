@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/lilyaka/Desktop/раб. тетради/пкс/2 раб тетр/3/Program.csproj": {}
+    "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/practice/2 раб тетр/3/Program.csproj": {}
   },
   "projects": {
-    "/Users/lilyaka/Desktop/раб. тетради/пкс/2 раб тетр/3/Program.csproj": {
+    "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/practice/2 раб тетр/3/Program.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/lilyaka/Desktop/раб. тетради/пкс/2 раб тетр/3/Program.csproj",
+        "projectUniqueName": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/practice/2 раб тетр/3/Program.csproj",
         "projectName": "Program",
-        "projectPath": "/Users/lilyaka/Desktop/раб. тетради/пкс/2 раб тетр/3/Program.csproj",
+        "projectPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/practice/2 раб тетр/3/Program.csproj",
         "packagesPath": "/Users/lilyaka/.nuget/packages/",
-        "outputPath": "/Users/lilyaka/Desktop/раб. тетради/пкс/2 раб тетр/3/obj/",
+        "outputPath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/practice/2 раб тетр/3/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/lilyaka/.nuget/NuGet/NuGet.Config"

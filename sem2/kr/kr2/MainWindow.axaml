@@ -27,7 +27,7 @@
             <Setter Property="Padding" Value="14,9"/>
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Background" Value="#E2E8F0"/>
-            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Foreground" Value="#242a38"/>
             <Setter Property="BorderBrush" Value="#CBD5E1"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -51,13 +51,46 @@
         <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="#FECACA"/>
         </Style>
+        <Style Selector="Button.url-clear">
+            <Setter Property="Width" Value="22"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="MinWidth" Value="22"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="CornerRadius" Value="11"/>
+            <Setter Property="Background" Value="#E7EEF7"/>
+            <Setter Property="Foreground" Value="#4A6078"/>
+            <Setter Property="BorderBrush" Value="#C6D6E7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.url-clear:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#D3E2F2"/>
+        </Style>
+        <Style Selector="Button.url-clear:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#C4D7EC"/>
+        </Style>
         <Style Selector="TextBox">
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#CBD5E1"/>
             <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Foreground" Value="#303134"/>
+            <Setter Property="SelectionBrush" Value="#CFE0F2"/>
+            <Setter Property="SelectionForegroundBrush" Value="#0F172A"/>
             <Setter Property="Padding" Value="10,8"/>
+        </Style>
+        <Style Selector="TextBox /template/ ScrollViewer#PART_ScrollViewer">
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+        <Style Selector="TextBox:focus">
+            <Setter Property="Background" Value="#F8FBFF"/>
+            <Setter Property="BorderBrush" Value="#9DB7D6"/>
+        </Style>
+        <Style Selector="TextBox:focus /template/ ScrollViewer#PART_ScrollViewer">
+            <Setter Property="Background" Value="#F8FBFF"/>
         </Style>
         <Style Selector="ListBox">
             <Setter Property="Background" Value="#FFFFFF"/>
@@ -70,10 +103,19 @@
             <Setter Property="Background" Value="#E8F0F8"/>
         </Style>
         <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="#C7DCF5"/>
+            <Setter Property="Background" Value="#262a2f"/>
         </Style>
         <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="#B8D3F0"/>
+            <Setter Property="Background" Value="#2d3237"/>
+        </Style>
+        <Style Selector="ListBox#HistoryListBox ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#C6D9EC"/>
+        </Style>
+        <Style Selector="ListBox#HistoryListBox ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="#ADC8E2"/>
+        </Style>
+        <Style Selector="ListBox#HistoryListBox ListBoxItem:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#97B9DA"/>
         </Style>
     </Window.Styles>
 
@@ -124,7 +166,18 @@
                     <TextBlock Text="Проверка URL/URI" FontWeight="SemiBold" FontSize="18" Foreground="{StaticResource TextMainBrush}"/>
 
                     <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
-                        <TextBox x:Name="UrlInputTextBox" Watermark="Введите URL, например: https://example.com:8080/path?a=1#part"/>
+                        <Grid>
+                            <TextBox x:Name="UrlInputTextBox"
+                                     Padding="10,8,36,8"
+                                     Watermark="Введите URL, например: https://example.com:8080/path?a=1#part"/>
+                                <Button Classes="url-clear"
+                                        Content="✕"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,8,0"
+                                    ToolTip.Tip="Очистить поле URL"
+                                    Click="ClearInputClick"/>
+                        </Grid>
                         <Button Grid.Column="1" Classes="accent" Content="Анализ" Click="AnalyzeUrlClick"/>
                         <Button Grid.Column="2" Content="Ping" Click="PingHostClick"/>
                         <Button Grid.Column="3" Content="DNS" Click="ResolveDnsClick"/>
@@ -151,6 +204,7 @@
                                 <Button Grid.Column="1" Classes="danger" Content="Очистить" Click="ClearHistoryClick"/>
                             </Grid>
                             <ListBox x:Name="HistoryListBox" Grid.Row="1"
+                                     SelectionChanged="HistorySelectionChanged"
                                      Foreground="{StaticResource TextMainBrush}"
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                         </Grid>

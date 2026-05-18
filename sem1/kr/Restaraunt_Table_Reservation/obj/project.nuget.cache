@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "c5NpR+1SjH8=",
+  "dgSpecHash": "sl042vY+00U=",
   "success": true,
-  "projectFilePath": "/Users/lilyaka/Desktop/раб.тетради/пкс/Restaraunt_Table_Reservation/RestaurantConsoleApp/RestaurantConsoleApp.csproj",
+  "projectFilePath": "/Users/lilyaka/Desktop/раб.тетради/пкс/sem1/kr/Restaraunt_Table_Reservation/RestaurantConsoleApp.csproj",
   "expectedPackageFiles": [
     "/Users/lilyaka/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/lilyaka/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
